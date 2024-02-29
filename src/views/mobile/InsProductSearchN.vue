@@ -5,6 +5,7 @@
     </div> -->
     <div class="NsMain">
         <div class="SearchSlide">
+          <div class="bg" @click="closeSub"></div>
           <div class="leftSide">
             <NsadvancedSearch @advancedChange="advancedChange" v-if="isAdvanced"  @closeSub="closeSub" @resetAll="resetAll" />
           </div>
@@ -24,7 +25,7 @@
                 </ul>
               </transition>
             </li>
-             <li  class="sortBox liTop" @click.stop="ShowSellType=!ShowSellType">
+             <!-- <li  class="sortBox liTop" @click.stop="ShowSellType=!ShowSellType">
               <p class="sortTitle">
                 {{$t('Enquiry.SellType')}}
                 <i class="el-icon-arrow-down el-icon--right"></i>
@@ -36,25 +37,32 @@
                   <li @click="handleSellType(2)" :style="{'color':SellType==2?'#b19162':'#333333'}">{{$t('Enquiry.Bargaining')}}</li>
                 </ul>
               </transition>
-            </li>
+            </li> -->
           </ul>
         </div>
     </div>
     <div class="prolist-box">
-      <div class="products_container" v-if="proList.length>0">
-          <InsProductList v-for="item in proList" :key="item.productCode" :item="item" :needCode="false" class="product_item" ></InsProductList>
-        </div>
-        <div class="products_container" v-else>
-             <h3 class="nocontentTips">{{$t('messageTips.NoContent')}}</h3>
-        </div>
-          <div class="pager" v-if="totalRecord > pageSize">
-            <InsPage
-              :total="totalRecord"
-              v-model="currentPage"
-              :pageNum="pageSize"
-              :currentPage = "currentPage"
-            ></InsPage>
+      <transition name="slide">
+        <div key="1" v-show="!waiting">
+          <div class="products_container" v-if="proList.length>0">
+            <InsProductList v-for="item in proList" :key="item.productCode" :item="item" :needCode="false" class="product_item" ></InsProductList>
           </div>
+          <div class="products_container" v-else>
+              <h3 class="nocontentTips">{{$t('messageTips.NoContent')}}</h3>
+          </div>
+            <div class="pager" v-if="totalRecord > pageSize">
+              <InsPage
+                :total="totalRecord"
+                v-model="currentPage"
+                :pageNum="pageSize"
+                :currentPage = "currentPage"
+              ></InsPage>
+            </div>
+        </div>
+      </transition>
+      <transition name="slide">
+        <div class="faker" key="2" v-if="waiting" v-loading="true"></div>
+      </transition>
     </div>
   </div>
 </template>
@@ -91,14 +99,15 @@ export default class InsProductSearch extends Vue {
   command:string='';
   SortName:string = '';
   SellType:number=0;
-  ShowSellType:boolean =false
-  get isPtx () {
-      if (localStorage.getItem('isPtx') === '0') {
-        return false;
-      } else {
-        return true;
-      }
-  }
+  ShowSellType:boolean =false;
+  private waiting: boolean = true;
+  // get isPtx () {
+  //     if (localStorage.getItem('isPtx') === '0') {
+  //       return false;
+  //     } else {
+  //       return true;
+  //     }
+  // }
   // 搜索关键词
   get searchKey () {
     let a = this.$store.state.searchKey;
@@ -137,6 +146,7 @@ export default class InsProductSearch extends Vue {
   // 产品高级搜索
   // 产品高级搜索
   productSearch() {
+    this.waiting = true;
     this.TShake(() => {
       this.$Api.product
         .search({
@@ -144,7 +154,7 @@ export default class InsProductSearch extends Vue {
           PageInfo: {
             Page: this.currentPage,
             PageSize: this.pageSize,
-            SortName: this.SortName,
+            SortName: 'SalePrice',
             SortOrder: this.PriceItem
           },
           CatIdS: this.searchCatalogs,
@@ -156,9 +166,10 @@ export default class InsProductSearch extends Vue {
         .then(result => {
           this.proList = result.YouWouldLike;
           this.totalRecord = result.TotalRecord;
+          this.waiting = false;
           this.$HiddenLayer();
         });
-    }, 500);
+    }, 1);
   }
   delay = 0;
   TShake(fn, d) {
@@ -174,7 +185,8 @@ export default class InsProductSearch extends Vue {
   advancedChange (Attrs, Catalogs) {
     this.currentPage = 1;
     this.attrs = Attrs;
-    this.searchCatalogs = Catalogs;
+    // this.searchCatalogs = Catalogs;
+    this.searchCatalogs = Catalogs.slice(0, 1);
     this.productSearch();
   }
   // 重置搜索
@@ -231,7 +243,7 @@ export default class InsProductSearch extends Vue {
 <style lang="less">
 .ProductSearch {
   .el-loading-spinner .circular {
-    display: none;
+    // display: none;
   }
 
   .el-loading-text {
@@ -368,20 +380,30 @@ export default class InsProductSearch extends Vue {
   left: 0;
   top: 0px;
   bottom: 0px;
-  background: rgba(0,0,0,.7);
-  overflow-x: auto;
+  background: rgba(0,0,0,.6);
+  // overflow-x: scroll;
   z-index: 999999;
   display: none;
   .leftSide{
     width: 70%;
     left:-70%;
-    min-height: 100%;
+    height: 100%;
     position: absolute;
     transition: all .5s;
-    background: #f2f1f0;
-    border-top-right-radius: 1rem;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    // overflow: hidden;
+    overflow-x: scroll;
+    background-color: #ebebeb;
   }
-
+  > .bg{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    // background: rgba(0,0,0,.6);
+  }
 }
 .closeBar{
     left: 0%!important;
@@ -440,5 +462,10 @@ export default class InsProductSearch extends Vue {
     }
   }
   }
+}
+.faker {
+  width: 100%;
+  height: 50vw;
+  background-color: aliceblue;
 }
 </style>

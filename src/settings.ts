@@ -7,7 +7,7 @@ export default {
   /* 網站基礎配置 */
   siteVersion: 3, // 網站版本[未完善] （1 => Plan A Startup Version 初創版, 2 => Plan B Enterprise Version 企業旗艦版, 3 => Plan C E-Commerce Version 品牌電商版）
   responsive: true, // 自適應網站開關[未完善]
-  defaultLang: 'C',
+  defaultLang: 'E',
   defaultCurrency: 1,
   mobileBuilding: false,
   pcBuilding: false,
@@ -17,9 +17,6 @@ export default {
   langList: [{
     name: '繁體',
     value: 'C'
-  }, {
-    name: '简体',
-    value: 'S'
   }, {
     name: 'ENG',
     value: 'E'

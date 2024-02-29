@@ -89,6 +89,8 @@ export default class Banner extends Vue {
 
 <style lang="less" scoped>
 .banner {
+  width: 1200px;
+  margin: 0 auto;
   .swiper-slide {
     img {
       width: 100%;

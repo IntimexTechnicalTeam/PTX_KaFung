@@ -22,7 +22,7 @@
             <p class="perline"><span class="left">{{$t("product.ProductCode")}}</span><span class="right">{{panelDetail.Code}}</span></p>
             <p class="perline"><span class="left">{{$t('Message.Catalog')}}</span>
             <span class="right">
-              <router-link to="/" class="NormalColor">{{$t('Message.HomeTips')}}</router-link> > <span v-for="(v,index) in panelDetail.CatalogTree" :key="index"><router-link class="redColor" :to="'/product/search/-?' + 'catalogs=' + JSON.stringify([v.Id]) + '&type=0'" v-if="v.ParentId!=0">{{v.Name}}</router-link></span>
+              <router-link to="/" class="NormalColor">{{$t('Message.HomeTips')}}</router-link> > <span v-for="(v,index) in panelDetail.CatalogTree" :key="index"><router-link class="redColor" :to="'/product/search/-?' + 'catalogs=' + JSON.stringify([v.Id]) + '&type=0'">{{v.Name}}</router-link></span>
             </span>
             </p>
           </div>

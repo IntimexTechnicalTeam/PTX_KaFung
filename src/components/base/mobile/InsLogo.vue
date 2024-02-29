@@ -14,7 +14,8 @@ export default class InsLogo extends Vue {
 <style scoped lang="less">
 .logo {
   img {
-    width: 15rem;
+    width: 22rem;
+    display: block;
   }
 }
 </style>

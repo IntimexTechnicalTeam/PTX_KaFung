@@ -135,10 +135,13 @@ export default class insNews extends Vue {
 </script>
 <style scoped lang="less">
 .catDetail {
+  background: url('/images/pc/KAFUNG.gif') center center;
+  background-size: contain;
+  padding-bottom: 173px;
   .catContent {
       width: 100%;
-      display: flex;
-      flex-wrap: wrap;
+      // display: flex;
+      // flex-wrap: wrap;
   }
 }
 </style>

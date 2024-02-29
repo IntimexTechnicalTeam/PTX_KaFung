@@ -161,7 +161,8 @@ export default {
     Unit: 'Unit',
     Filter: 'Filter',
     ViewAll: 'View All',
-    SortBy: 'SortBy'
+    SortBy: 'Sort By',
+    Number: 'Code'
   },
   Shoppingcart: {
     ShoppingcartTitle: 'Shopping Cart ',

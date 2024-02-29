@@ -1,7 +1,7 @@
 <template>
  <div id="footer">
     <div class="footer-box">
-          <p><img src="/images/mobile/logo_white.png"></p>
+          <!-- <p><img src="/images/mobile/logo_white.png"></p> -->
           <!-- <div class="contactBox">
               <div class="w50">
                   <p>whatsapp&nbsp;{{$t('home.Order')}}</p>
@@ -13,21 +13,22 @@
               </div>
           </div> -->
           <div class="footerNav">
+                  <ul v-for="(n,index) in footerMenus" :key="index">
+                <li>
+                    <a href="javascript:;" v-if="n.Type === 0" @click="toUrl(n)"><span>{{n.Name}}</span></a>
+                    <router-link :to="To(n)"  v-else><span>{{n.Name}}</span></router-link>
                   <ul>
-                      <li v-for="(item,index) in footerMenus" :key="index" class="indexMeun">
-                          <a href="javascript:;">{{item.Name}}<i class="downIcon" @click="showMeun(item,index)"></i></a>
-                          <ul v-if="item.Childs && item.Childs.length"  class="submeunMain" :class="'sub'+index">
-                              <li v-for="(child,index2) in item.Childs" :key="index2">
-                                  <router-link :to="To(child)">{{child.Name}}</router-link>
-                                  <!-- <router-link  @click.native="closeSlideMenu(item.Childs)" :to="To(item.Childs)" slot="title">
-                                      <b>{{child.Name}}</b>
-                                  </router-link> -->
-                              </li>
-                          </ul>
-                      </li>
+                    <li v-for="(c,index2) in n.Childs" :key="index2">
+                       <a href="javascript:;" v-if="c.Type === 0" @click="toUrl(c)">
+                              {{c.Name}}
+                        </a>
+                       <router-link :to="To(c)" v-else>{{c.Name}}</router-link>
+                    </li>
                   </ul>
+                </li>
+             </ul>
               </div>
-          <div class="footerAccept" v-if="!isPtx">
+          <!-- <div class="footerAccept" v-if="!isPtx">
             <p>{{$t('home.Weaccept')}}</p>
             <div>
               <img src="/images/payment/stripe.png" />
@@ -38,9 +39,9 @@
               <img src="/images/payment/MasterCard.png" />
               <img src="/images/payment/VISA.png" />
             </div>
-          </div>
+          </div> -->
           <div class="footerCpy">
-            <p>Copyright © {{currentYear}} NStore<br>powered by Eventizer
+            <p>All rights reserved © {{currentYear}}  Kai Fung Plastic Bags Co.<br>Powered by Eventizer
             <a href="https://eventizer.hk/" target="_blank">
               <img src="/images/mobile/footerlogo.png">
             </a>
@@ -72,6 +73,13 @@ export default class InsFooter extends Vue {
   }
   closeSlideMenu (n) {
     this.$store.dispatch('isShowMenu', false);
+  }
+  toUrl (n) {
+    if (!n.IsNewWin && n.Url) {
+      window.location.href = n.Url;
+    } else if (n.IsNewWin && n.Url) {
+      window.open(n.Url);
+    }
   }
   To (n) {
     return n.Type === 1 ? '/cms/catDetail/' + n.Value.Id : n.Type === 2 ? '/CMS/content/' + n.Value.Id : n.Type === 3 ? '/RegNPay/Form/' + n.Value.Id : n.Type === 4 && !this.$store.state.catMenuType ? '/product/cat/' + n.Value.Id : n.Type === 4 && this.$store.state.catMenuType ? '/product/search/-?catalogs=' + JSON.stringify([parseInt(n.Value.Id)]) + '&type=0' : n.Type === 5 ? '/product/search/-?attrs=' + JSON.stringify([{ Id: parseInt(n.Value.Id), Vals: [] }]) + '&type=0' : '/product/search/-?attrs=' + JSON.stringify([{ Id: parseInt(n.ParentId), Vals: [parseInt(n.Value.Id)] }]) + '&type=0';
@@ -108,8 +116,8 @@ export default class InsFooter extends Vue {
   width: 100%;
   // background: url('/images/mobile/MobileIndex_04.jpg') no-repeat center center;
   // background-size: cover;
-  display: inline-block;
-  background-color: #4d4d4d;
+  display: block;
+  background-color: #2687c6;
   .footer-box{
     width: 90%;
     margin: 0 auto;
@@ -149,14 +157,14 @@ export default class InsFooter extends Vue {
       }
     }
     .footerNav{
-      width: 80%;
+      width: 100%;
       margin: 0 auto;
-      margin-top: 2rem;
-      margin-bottom: 2rem;
+      // margin-top: 2rem;
+      // margin-bottom: 2rem;
       >ul>li{
         width: 100%;
         display: inline-block;
-        line-height: 4rem;
+        // line-height: 4rem;
         text-align: center;
         margin-bottom: 1rem;
         position: relative;
@@ -180,25 +188,36 @@ export default class InsFooter extends Vue {
           }
         }
         >a{
-          font-size: 1.8rem;
-          color:#333333;
+          font-size: 1.4rem;
+          color:#fff;
           font-weight: 500;
           text-decoration: none;
           position: relative;
           display: block;
-          background: #ffffff;
+          // background: #ffffff;
           border-radius: 5px;
           margin-bottom: .5rem;
-          i{
-               background: url('/Images/mobile/downicon.png') no-repeat center center;
-               background-size: contain;
-               width: 1.2rem;
-               height: 1.2rem;
-               display: inline-block;
-               position: absolute;
-               right: 1rem;
-               top: 1.4rem;
+          span{
+            font-size: 1.4rem;
+          color:#fff;
+          font-weight: 500;
+          text-decoration: none;
+          position: relative;
+          display: block;
+          // background: #ffffff;
+          border-radius: 5px;
+          margin-bottom: .5rem;
           }
+          // i{
+          //      background: url('/Images/mobile/downicon.png') no-repeat center center;
+          //      background-size: contain;
+          //      width: 1.2rem;
+          //      height: 1.2rem;
+          //      display: inline-block;
+          //      position: absolute;
+          //      right: 1rem;
+          //      top: 1.4rem;
+          // }
         }
       }
     }

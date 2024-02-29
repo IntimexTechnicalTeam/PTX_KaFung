@@ -1,7 +1,7 @@
 <template>
     <div class="InsAdvancedSearch">
-       <!-- <p class="resetTitle">{{$t('product.Screening')}}<span class="el-icon-close" @click="closeSub"></span></p>
-       <p class="resetAll" @click="resetAll">{{$t('product.Resetall')}}</p> -->
+       <p class="resetTitle">{{$t('product.Screening')}}<span class="el-icon-close" @click="closeSub"></span></p>
+       <p class="resetAll" @click="resetAll">{{$t('product.Resetall')}}</p>
         <ul class="attrSearch" v-if="init" style="display:none;">
           <ReSearchItem v-for="(attr, index) in attrList" :key="index" :searchGroup="attr" :defaultSelected="deAttrGIds.indexOf(attr.Id) !== -1 ? selectedAttrs[deAttrGIds.indexOf(attr.Id)].Vals : []"  @changeSelect="changeAttrSelect" />
         </ul>
@@ -276,50 +276,40 @@ export default class InsAdvancedSearch extends Vue {
     margin: 0 auto;
   }
   .resetAll{
-    background: #333333;
-    padding-left: 1rem;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    color:#FFF;
-    font-size: 1.6rem;
-    text-decoration: underline;
+    color: #FFF;
+    font-size: 22px;
+    width: 90%;
+    margin: 0 auto;
+    background: #333;
+    background-size: cover;
+    text-align: center;
+    height: 50px;
+    border-radius: .3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
   }
   .resetTitle{
-    background: #666666;
     padding-left: 1rem;
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
-    color:#FFF;
-    font-size: 1.6rem;
+    color:#333333;
+    font-size:22px;
+    background: #fff;
     span{
       float:right;
       margin-right: 1rem;
-      font-size: 2.5rem;
+      font-size: 30px;
+      color:@base_color;
+      cursor: pointer;
     }
   }
 }
 .ReSearchItem{
-    position: relative;
-    background: #FFF;
-    // &::before{
-    //     content: '';
-    //     width: 95%;
-    //     height: 10px;
-    //     background: url(/images/mobile/productList_icon.png) no-repeat center center;
-    //     background-size: contain;
-    //     position: absolute;
-    //     top: 5px;
-    //     left: 2.5%;
-    //   }
-    //    &::after{
-    //     content: '';
-    //     width: 95%;
-    //     height: 10px;
-    //     background: url(/images/mobile/productList_icon.png) no-repeat center center;
-    //     background-size: contain;
-    //     position: absolute;
-    //     bottom: 5px;
-    //     left: 2.5%;
-    //   }
-  }
+  position: relative;
+  background: #FFF;
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+}
 </style>

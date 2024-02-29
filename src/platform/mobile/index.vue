@@ -3,7 +3,7 @@
     <ins-header  v-show="routerPath!=='/building'" />
     <router-view></router-view>
     <ins-footer  v-show="routerPath!=='/building'" />
-    <ins-sidebar />
+    <!-- <ins-sidebar /> -->
     <ins-slide-menu :direction="'right'">
       <ins-menu-layout />
     </ins-slide-menu>

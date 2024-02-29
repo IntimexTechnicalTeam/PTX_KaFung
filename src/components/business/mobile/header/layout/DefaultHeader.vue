@@ -7,7 +7,7 @@
           </router-link>
           <ins-fav />
           <shopcart class="shoppingcart"/>
-          <CodeSelect class="header-code" />
+          <!-- <CodeSelect class="header-code" /> -->
           <ins-lang-switch class="headerLang" />
       </div>
         <div class="flex-box">
@@ -78,8 +78,8 @@ export default class DefaultHeader extends Vue {
         padding: 0 1.5rem;
 
         .logo {
-          width: 15rem;
-          margin: 0 auto;
+          width: 22rem;
+          // margin: 0 auto;
         }
 
         .slide-menu {

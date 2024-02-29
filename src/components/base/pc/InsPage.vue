@@ -24,7 +24,17 @@ export default class InsPage extends Vue {
     };
     this.Page = num;
     this.$emit('input', this.current);
-    document.body.scrollTop = document.documentElement.scrollTop = 0;
+    // document.body.scrollTop = document.documentElement.scrollTop = 0;
+
+    let top = document.documentElement.scrollTop;
+
+    const timeTop = setInterval(() => {
+      document.documentElement.scrollTop = top -= 50;
+
+      if (top <= 0) {
+        clearInterval(timeTop);
+      }
+    }, 10);
     // let target = this.$refs.value as HTMLInputElement;
     // target.value = String(this.current);
   }

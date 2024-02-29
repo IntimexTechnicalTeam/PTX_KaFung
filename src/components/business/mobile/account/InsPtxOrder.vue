@@ -414,6 +414,11 @@ export default class InsNotification extends Vue {
       align-items: center;
       justify-content: center;
       margin-bottom: 10px;
+      select{
+        option:nth-child(4), option:nth-child(6){
+          display: none;
+        }
+      }
     }
     .P3{
       width: 100%;

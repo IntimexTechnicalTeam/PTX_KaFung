@@ -1,6 +1,6 @@
 <template>
   <div class="productBox">
-     <div class="TitleBg"><div class="innerBox">{{$t('Cms.BigSales')}}</div></div>
+     <!-- <div class="TitleBg"><div class="innerBox">{{$t('Cms.BigSales')}}</div></div> -->
     <div class="swiper-container swiper-container-hot">
         <swiper :options="swiperOption" ref="mySwiper">
         <!-- slides -->
@@ -45,7 +45,7 @@ export default class PkHotProduct extends Vue {
       var page = 'Home';
       this.$Api.promotion.getPromotion('Home', 4).then((result) => {
         if (result.Promotion.PrmtProductList.length > 0) {
-          this.hotProducts = result.Promotion.PrmtProductList.slice(0, 8);
+          this.hotProducts = result.Promotion.PrmtProductList.slice(0, 6);
         }
       });
     }

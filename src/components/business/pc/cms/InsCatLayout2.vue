@@ -2,7 +2,9 @@
     <div class="CatMain NormalTop">
       <transition name="slide">
         <div key="1" v-if="!waiting" style="display:flex;">
-           <div class="DetailTitle"><img :src="BannerImg" v-show="BannerImg!==null"><div class="TitleBg"><div class="innerBoxText">{{CateName}}</div></div></div>
+           <div class="DetailTitle">
+            <!-- <img :src="BannerImg" v-show="BannerImg!==null"> -->
+            <div class="TitleBg"><div class="innerBoxText">{{CateName}}</div></div></div>
       </div>
       </transition>
       <transition name="slide">

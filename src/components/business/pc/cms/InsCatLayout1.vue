@@ -2,7 +2,9 @@
     <div class="CatMain NormalTop">
       <transition name="slide">
         <div key="1" v-if="!waiting" style="display:flex;">
-           <div class="DetailTitle"><img :src="BannerImg" v-show="BannerImg!==null"><div class="TitleBg"><div class="innerBoxText">{{CateName}}</div></div></div>
+           <div class="DetailTitle">
+            <!-- <img :src="BannerImg" v-show="BannerImg!==null"> -->
+            <div class="TitleBg"><div class="innerBoxText">{{CateName}}</div></div></div>
       </div>
       </transition>
       <transition name="slide">
@@ -94,6 +96,9 @@ export default class InsCatLayout1 extends Vue {
 </script>
 
 <style scoped lang="less">
+.NormalTop{
+
+}
 .pager {
   width: 100%;
   display: flex;
@@ -105,8 +110,8 @@ export default class InsCatLayout1 extends Vue {
 }
 .CatMain {
     width: 100%;
-    display: flex;
-    flex-wrap: wrap;
+    // display: flex;
+    // flex-wrap: wrap;
 }
 .NomralBg {
   margin-top: 1rem;
@@ -130,28 +135,32 @@ export default class InsCatLayout1 extends Vue {
 }
 .DetailTitle{
   width: 100%;
-  display: flex;
-  flex-wrap:wrap;
+  // display: flex;
+  // flex-wrap:wrap;
   position: relative;
-  align-items: center;
-  justify-content: center;
+  // align-items: center;
+  // justify-content: center;
+  // height: 300px;
+  overflow: hidden;
   img{
     width: 100%;
   }
   .TitleBg{
-    width: 500px;
-    border: 1px solid #ffffff;
-    height: 70px;
-    line-height: 70px;
+    // width: 500px;
+    // border: 1px solid #ffffff;
+    // height: 70px;
+    // line-height: 70px;
     margin: 0 auto;
     padding: 10px;
     margin-bottom: 20px;
-    top: 50%;
-    position: absolute;
-    transform: translateY(-50%);
+    margin-top: 50px;
+    // top: 50%;
+    // left: 50%;
+    // position: absolute;
+    // transform: translate(-50%, -50%);
     .innerBoxText{
-      background:#ffffff;
-      color: #333333;
+      // background:#ffffff;
+      color: #000;
       display: flex;
       align-items: center;
       justify-content: center;

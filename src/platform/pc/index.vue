@@ -3,7 +3,7 @@
     <Header v-show="routerPath!=='/building'" />
     <router-view></router-view>
     <Footer v-show="routerPath!=='/building'"/>
-    <Sidebar />
+    <!-- <Sidebar /> -->
   </div>
 </template>
 

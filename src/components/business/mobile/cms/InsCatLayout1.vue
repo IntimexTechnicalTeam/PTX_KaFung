@@ -2,7 +2,9 @@
     <div class="CatMain NoramlPaddingTop">
       <transition name="slide">
         <div key="1" v-if="!waiting" style="display:flex;">
-           <div class="DetailTitle"><img :src="BannerImg" v-show="BannerImg!==null"><div class="TitleBg"><div class="innerBoxText">{{CateName}}</div></div></div>
+           <div class="DetailTitle">
+            <!-- <img :src="BannerImg" v-show="BannerImg!==null"> -->
+            <div class="TitleBg"><div class="innerBoxText">{{CateName}}</div></div></div>
       </div>
       </transition>
       <transition name="slide">
@@ -100,8 +102,8 @@ export default class InsCatLayout1 extends Vue {
 }
 .CatMain {
     width: 100%;
-    display: flex;
-    flex-wrap: wrap;
+    // display: flex;
+    // flex-wrap: wrap;
 }
 .PathData {
   width: 90%;
@@ -128,14 +130,16 @@ export default class InsCatLayout1 extends Vue {
     position: relative;
     align-items: center;
     justify-content: center;
+        height: 15rem;
+    overflow: hidden;
     img{
       width: 100%;
     }
     .TitleBg{
-      width: 75%;
-      border: 1px solid #ffffff;
-      height: 4.5rem;
-      line-height: 4.5rem;
+      // width: 75%;
+      // border: 1px solid #ffffff;
+      // height: 4.5rem;
+      // line-height: 4.5rem;
       margin: 0 auto;
       padding: 10px;
       margin-bottom: 20px;
@@ -143,7 +147,7 @@ export default class InsCatLayout1 extends Vue {
       position: absolute;
       transform: translateY(-50%);
       .innerBoxText{
-        background:#ffffff;
+        // background:#ffffff;
         color: #333333;
         display: flex;
         align-items: center;

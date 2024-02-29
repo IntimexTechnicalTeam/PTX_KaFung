@@ -1,7 +1,6 @@
 <template>
     <div class="langSwitch">
         <p @click="changeLang('C')" :class="{'active': $Storage.get('locale') === 'C'}">繁體</p>|
-        <p @click="changeLang('S')" :class="{'active': $Storage.get('locale') === 'S'}">简体</p>|
         <p @click="changeLang('E')" :class="{'active': $Storage.get('locale') === 'E'}">ENG</p>
 
       <!-- <p @click="changeLang(lang.value)" v-for="(lang,index) in this.$Settings.langList" :key="index" :class="{'active': $Storage.get('locale') === lang.value}">{{lang.name}}</p> -->
@@ -47,6 +46,7 @@ export default class InsLangSwitch extends Vue {
       color: #999;
       &:last-child {
         padding-right: 0;
+        padding-top: 4px;
       }
     }
     .active {

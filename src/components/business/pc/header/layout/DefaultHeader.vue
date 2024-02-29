@@ -38,7 +38,7 @@
               <Shopcart class="memberLogin"></Shopcart>
               <!-- 购物车结束 -->
               <!-- 切换语言开始 -->
-              <CodeSelect  />
+              <!-- <CodeSelect  /> -->
               <div class="langBox">
                   <InsLangSwitch></InsLangSwitch>
               </div>
@@ -271,14 +271,15 @@ export default class DefaultHeader extends Vue {
 .header-layout {
  /deep/ .header_menu {
    width: 1200px;
-   margin: 30px auto 10px;
+   margin: 30px auto 0;
    > ul {
+   position: relative;
      > li {
       float: left;
       display: flex;
       align-items: center;
-      position: relative;
-      width: 14.28%;
+      position: initial;
+      width: auto;
 
       > a {
         width: 100%;
@@ -299,10 +300,17 @@ export default class DefaultHeader extends Vue {
       }
 
       ul {
-        box-shadow: 0 0 5px #ccc;
-
+        box-shadow: 0 5px 5px #ccc;
+        top: 100%;
+        width: 100%;
+        left: 0;
+        // height: 250px;
+        background: #fff;
+            padding: 10px;
+    box-sizing: border-box;
         li {
           border: 0;
+          width: auto;
           > a {
             font-size: 18px;
             color: #666666;
@@ -310,7 +318,7 @@ export default class DefaultHeader extends Vue {
             text-align: center;
             font-weight: 500;
             text-transform: uppercase;
-            padding: 10px 5px;
+            padding: 15px 30px;
           }
 
           &:hover{

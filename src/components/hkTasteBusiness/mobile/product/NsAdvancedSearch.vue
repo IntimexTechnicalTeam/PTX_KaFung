@@ -1,14 +1,16 @@
 <template>
     <div class="NsAdvancedSearch">
       <div class="TopMeun">
-          <p class="resetTitle">{{$t('product.Filter')}}<span class="el-icon-close" @click="closeSub"></span></p>
+          <!-- <p class="resetTitle">{{$t('product.Filter')}}<span class="el-icon-close" @click="closeSub"></span></p> -->
           <p class="resetAll" @click="resetAll">{{$t('Message.ResetOptions')}}</p>
        </div>
         <ul class="attrSearch" v-if="init" style="display:none;">
           <NsReSearchItem v-for="(attr, index) in attrList" :key="index" :searchGroup="attr" :defaultSelected="deAttrGIds.indexOf(attr.Id) !== -1 ? selectedAttrs[deAttrGIds.indexOf(attr.Id)].Vals : []"  @changeSelect="changeAttrSelect" />
         </ul>
         <ul class="catSearch" v-if="init">
-          <NsReSearchItem v-for="(cat, index) in catalogs" :key="index" :searchGroup="cat" :defaultSelected="deCatGIds.indexOf(cat.Id) !== -1 ? selectedCats[deCatGIds.indexOf(cat.Id)].Vals : []" :searchType="2"  @changeSelect="changeCatSelect" />
+          <!-- <NsReSearchItem v-for="(cat, index) in catalogs" :key="index" :searchGroup="cat" :defaultSelected="deCatGIds.indexOf(cat.Id) !== -1 ? selectedCats[deCatGIds.indexOf(cat.Id)].Vals : []" :searchType="2"  @changeSelect="changeCatSelect" /> -->
+
+          <NsReSearchItem v-for="(cat, index) in catalogs" :key="index" :searchGroup="cat" :defaultSelected="deCatGIds.indexOf(cat.Id) !== -1 ? [cat.Id] : []" :searchType="2"  @changeSelect="changeCatSelect" />
         </ul>
     </div>
 </template>
@@ -191,19 +193,20 @@ export default class NsAdvancedSearch extends Vue {
     changeCatSelect (Id, cat) {
       this.deCatGIds = [];
       let flag = 0;
-      for (let i = 0; i < this.selectedCats.length; i++) {
-        if (this.selectedCats[i].Id === Id) {
-          flag = 1;
-          if (cat.length) {
-            this.selectedCats[i].Vals = cat;
-            break;
-          } else {
-            this.selectedCats.splice(i, 1);
-          }
-        }
-      }
+      // for (let i = 0; i < this.selectedCats.length; i++) {
+      //   if (this.selectedCats[i].Id === Id) {
+      //     flag = 1;
+      //     if (cat.length) {
+      //       this.selectedCats[i].Vals = cat;
+      //       break;
+      //     } else {
+      //       this.selectedCats.splice(i, 1);
+      //     }
+      //   }
+      // }
 
       if (!flag) {
+        this.selectedCats = [];
         this.selectedCats.push({
           Id: Id,
           Vals: cat
@@ -212,9 +215,9 @@ export default class NsAdvancedSearch extends Vue {
 
       this.paramCats = [];
       this.selectedCats.forEach(element => {
-        element.Vals.forEach(v => {
-          this.paramCats.push(v);
-        });
+        // element.Vals.forEach(v => {
+        //   this.paramCats.push(v);
+        // });
         if (element.Vals.length === 0) {
            this.paramCats.push(element.Id);
         } else {
@@ -258,7 +261,7 @@ export default class NsAdvancedSearch extends Vue {
   @Watch('$route', { deep: true })
     onRouteChange (n, o) {
       if (!this.routerType) {
-        console.log('route变啦');
+        // console.log('route变啦');
         this.init = false;
 
         this.getDefaultSelected().then(() => {
@@ -270,29 +273,30 @@ export default class NsAdvancedSearch extends Vue {
 </script>
 <style scoped lang="less">
 .NsAdvancedSearch {
-  border-top-right-radius: 1rem;
-  border-bottom-right-radius: 1rem;
+  // border-top-right-radius: 1rem;
+  // border-bottom-right-radius: 1rem;
   overflow: auto;
   height: 100vh;
     .TopMeun {
     background: #fff;
+    padding-top: 2rem;
     padding-bottom: 1rem;
     overflow: hidden;
-    border-top-right-radius: 1rem;
-    border-bottom-right-radius: 1rem;
+    // border-top-right-radius: 1rem;
+    // border-bottom-right-radius: 1rem;
   }
   .catSearch {
-    margin-top: 1rem;
+    // margin-top: 1rem;
     overflow: hidden;
     background: #fff;
-    border-top-right-radius: 1rem;
-    border-bottom-right-radius: 1rem;
+    // border-top-right-radius: 1rem;
+    // border-bottom-right-radius: 1rem;
     padding-left: 5%;
     padding-right: 5%;
   }
   .resetAll{
     color: #FFF;
-    font-size: 22px;
+    font-size: 1.4rem;
     width: 90%;
     margin: 0 auto;
     background: #333;

@@ -161,7 +161,8 @@ export default {
     Unit: '單位',
     Filter: '篩選',
     ViewAll: '查看更多',
-    SortBy: '排序'
+    SortBy: '排序',
+    Number: '編號'
   },
   Shoppingcart: {
     ShoppingcartTitle: '購物車',

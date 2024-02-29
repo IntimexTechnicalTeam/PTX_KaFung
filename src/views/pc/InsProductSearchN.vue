@@ -28,17 +28,21 @@
           </transition>
       </div>
     </div> -->
-    <div class="ProductSearch">
-      <div class="SearchSlide">
-        <div class="leftSide">
-          <NsadvancedSearch @advancedChange="advancedChange" v-if="isAdvanced"  @closeSub="closeSub" @resetAll="resetAll" />
+    <div class="ProductSearch fix">
+      <div class="left">
+        <div class="SearchSlide">
+          <div class="bg" @click="closeSub"></div>
+          <div class="leftSide">
+            <NsadvancedSearch @advancedChange="advancedChange" v-if="isAdvanced"  @closeSub="closeSub" @resetAll="resetAll"  />
+          </div>
         </div>
       </div>
-      <div class="selectBar">
+      <div class="right">
+        <div class="selectBar">
           <ul>
-            <div class="left">
+            <!-- <div class="left">
               <li @click="showSearchSlide" class="liTop"><span class="filterIcon"></span><b>{{$t('product.Screening')}}</b></li>
-            </div>
+            </div> -->
             <div class="right">
             <li  class="sortBox liTop" @click.stop="showList=!showList">
               <p class="sortTitle">
@@ -52,7 +56,7 @@
                 </ul>
               </transition>
             </li>
-           <li  class="sortBox liTop" @click.stop="ShowSellType=!ShowSellType">
+           <!-- <li  class="sortBox liTop" @click.stop="ShowSellType=!ShowSellType">
               <p class="sortTitle">
                 {{$t('Enquiry.SellType')}}
                 <i class="el-icon-arrow-down el-icon--right"></i>
@@ -64,16 +68,21 @@
                   <li @click="handleSellType(2)" :style="{'color':SellType==2?'#b19162':'#333333'}">{{$t('Enquiry.Bargaining')}}</li>
                 </ul>
               </transition>
-            </li>
+            </li> -->
             </div>
           </ul>
         </div>
       <div class="NsProduct">
           <transition name="slide">
-            <div key="1" v-if="!waiting">
+            <div key="1" v-show="!waiting">
               <div class="prolist-box" v-if="proList.length > 0">
                 <ins-productList :column="4" :allItems="proList" class="productPer" />
-                  <div class="pager" v-if="totalRecord > pageSize">
+
+                </div>
+              <div class="prolist-box" v-else>
+                <h3 class="nocontentTips">{{ $t("messageTips.NoContent") }}</h3>
+              </div>
+              <div class="pager" v-show="totalRecord > pageSize">
                     <InsPage
                       :total="totalRecord"
                       v-model="currentPage"
@@ -81,16 +90,25 @@
                       :currentPage = "currentPage"
                     ></InsPage>
                   </div>
-                </div>
-              <div class="prolist-box" v-else>
-                <h3 class="nocontentTips">{{ $t("messageTips.NoContent") }}</h3>
-              </div>
+
+                  <!-- <div class="pager" v-if="totalRecord > pageSize">
+                    <InsPage
+                      :total="totalRecord"
+                      v-model="currentPage"
+                      :pageNum="pageSize"
+                      :currentPage = "currentPage"
+                      :key="pageSize"
+                    ></InsPage>
+                  </div> -->
             </div>
+
           </transition>
           <transition name="slide">
             <div class="faker" key="2" v-if="waiting" v-loading="true"></div>
           </transition>
       </div>
+      </div>
+
     </div>
   </div>
 </template>
@@ -118,7 +136,7 @@ import $ from 'jquery';
 export default class InsProductSearch extends Vue {
   proList: YouWouldLike[] = []; // 产品数据
   currentPage: number = 1; // 当前页
-  pageSize: number = 12; // 每页显示条目个数
+  pageSize: number = 20; // 每页显示条目个数
   totalRecord: number = 0; // 总条目数
   private tips: boolean = true;
   private LoadingInstance!: any;
@@ -143,16 +161,16 @@ export default class InsProductSearch extends Vue {
       return a;
     }
   }
-  get isPtx () {
-      if (localStorage.getItem('isPtx') === '0') {
-        return false;
-      } else {
-        return true;
-      }
-  }
-  get islogin () {
-    return this.$Storage.get('isLogin');
-  }
+  // get isPtx () {
+  //     if (localStorage.getItem('isPtx') === '0') {
+  //       return false;
+  //     } else {
+  //       return true;
+  //     }
+  // }
+  // get islogin () {
+  //   return this.$Storage.get('isLogin');
+  // }
   handleCommand(command) {
     this.command = command;
     if (command === 'newest') {
@@ -196,6 +214,8 @@ export default class InsProductSearch extends Vue {
   }
   // 产品高级搜索
   productSearch() {
+    this.waiting = true;
+    const page = this.currentPage;
     this.TShake(() => {
       this.$Api.product
         .search({
@@ -215,10 +235,33 @@ export default class InsProductSearch extends Vue {
         .then(result => {
           this.proList = result.YouWouldLike;
           this.totalRecord = result.TotalRecord;
+          this.currentPage = page;
           this.waiting = false;
           this.$HiddenLayer();
         });
-    }, 500);
+    }, 1);
+    // this.waiting = true;
+    // this.$Api.product
+    //     .search({
+    //       Key: this.searchKey,
+    //       PageInfo: {
+    //         Page: this.currentPage,
+    //         PageSize: this.pageSize,
+    //         SortName: 'SalePrice',
+    //         SortOrder: this.PriceItem
+    //       },
+    //       CatIdS: this.searchCatalogs,
+    //       Attrs: this.attrs,
+    //       Type: this.searchType,
+    //       Reflesh: 1,
+    //       SellType: this.SellType
+    //     })
+    //     .then(result => {
+    //       this.proList = result.YouWouldLike;
+    //       this.totalRecord = result.TotalRecord;
+    //       this.waiting = false;
+    //       this.$HiddenLayer();
+    //     });
   }
   delay = 0;
   TShake(fn, d) {
@@ -234,12 +277,25 @@ export default class InsProductSearch extends Vue {
   advancedChange(Attrs, Catalogs) {
     this.currentPage = 1;
     this.attrs = Attrs;
-    this.searchCatalogs = Catalogs;
+    this.searchCatalogs = Catalogs.slice(0, 1);
+    // this.waiting = false;
     this.productSearch();
   }
 
   mounted() {
     // this.productSearch();
+    // this.searchCatalogs = (this.$route.query.catalogs as string).split(',');
+    // alert(this.$route.params.catalogs);
+    // alert(this.$route.query.catalogs);
+    // this.searchCatalogs = [];
+    // let arr = (this.$route.query.catalogs as string).split(',');
+    // for (let index = 0; index < arr.length; index++) {
+    //   const el = parseInt(arr[index]);
+    //   // if (!isNaN(el)) {
+    //     this.searchCatalogs.push(el);
+    //   // };
+    // }
+    // alert(this.searchCatalogs.length);
   }
 
   @Watch('searchKey', { deep: true })
@@ -253,12 +309,13 @@ export default class InsProductSearch extends Vue {
   }
 }
 </script>
+
 <style scoped lang="less">
 .sortBox{
   position: relative;
   z-index: 1;
   .sortTitle{
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 500;
     color: #fff;
     img{
@@ -277,7 +334,7 @@ export default class InsProductSearch extends Vue {
     li{
       text-align: center;
       border-bottom: 1px solid #eee;
-      font-size: 20px;
+      font-size: 18px;
       &:last-of-type{
         border-bottom: none;
       }
@@ -341,8 +398,11 @@ export default class InsProductSearch extends Vue {
 }
 .faker {
   width: 100%;
-  height: 29vw;
-  background-color: aliceblue;
+  height: 50vw;
+  position: absolute;
+  top: 0;
+  background-color: #fff;
+  // /deep/ .
 }
 .ProducBanner {
   width: 100%;
@@ -360,36 +420,48 @@ export default class InsProductSearch extends Vue {
 .ProductSearch {
   width: 1200px;
   margin: 0 auto;
-  display: flex;
+  // display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   padding-top: 4rem;
-  .leftSide {
-    width: 25%;
+  .left{
+    width: 300px;
+    float: left;
   }
-  .rightSide {
-    width: 73%;
+  .right{
+    width: 850px;
+    float: right;
+    position: relative;
   }
 }
 .SearchSlide {
   width: 100%;
-  position: fixed;
+  // position: fixed;
   left: 0;
   top: 0px;
   bottom: 0px;
-  background: rgba(0, 0, 0, 0.6);
+  // background: rgba(0, 0, 0, 0.6);
   z-index: 999999;
-  display: none;
+  // display: none;
   .leftSide {
-    width: 20%;
-    left: -20%;
-    min-height: 100%;
-    position: absolute;
+    width: 300px;
+    left: 0;
+    height: 100%;
+    // position: absolute;
     transition: all 0.5s;
-    background: #f2f1f0;
-    border-top-right-radius: 1rem;
-    border-bottom-right-radius: 1rem;
-    overflow: hidden;
+    background-color: #fff;
+    // border-top-right-radius: 16px;
+    // border-bottom-right-radius: 16px;
+    // overflow-y: scroll;
+  }
+  > .bg{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    display: none;
+    // background: rgba(0,0,0,.6);
   }
 }
 .closeBar {
@@ -399,13 +471,13 @@ export default class InsProductSearch extends Vue {
   width: 100%;
   margin: 0 auto;
   display: inline-block;
-  margin-top: 2rem;
+  // margin-top: 2rem;
   >ul {
     width: 100%;
     margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    // display: flex;
+    // flex-wrap: wrap;
+    // justify-content: space-between;
     .left {
       width: 30%;
     }
@@ -416,7 +488,7 @@ export default class InsProductSearch extends Vue {
     }
      .liTop {
       float: left;
-      margin-right: 2.5%;
+      // margin-right: 2.5%;
       height: 50px;
       line-height: 50px;
       list-style: none;
@@ -424,11 +496,12 @@ export default class InsProductSearch extends Vue {
       justify-items: center;
       justify-content: center;
       align-items: center;
-      background: #000;
+      background: #333;
       background-size: 100% 100%;
       color: #333;
       width: 250px;
       cursor: pointer;
+          border-radius: 0.3rem;
       b {
         width: 60%;
         display: inline-block;

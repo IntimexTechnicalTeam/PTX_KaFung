@@ -4,21 +4,23 @@
     <div class="Cmsbg" v-if="NewcateId=='40112'">
       <transition name="slide">
         <div key="1" v-if="!waiting" style="display:flex;">
-           <div class="DetailTitle"><img :src="ImgList" v-show="ImgList!==null"><div class="TitleBg"><div class="innerBoxText">{{CateName}}</div></div></div>
+           <div class="DetailTitle">
+            <!-- <img :src="ImgList" v-show="ImgList!==null"> -->
+            <div class="TitleBg"><div class="innerBoxText">{{CateName}}</div></div></div>
       </div>
       </transition>
       <transition name="slide">
         <div class="faker" key="2" v-if="waiting" v-loading="true"></div>
       </transition>
       <div class="CmsContent">
-        <div class="MapInfo">
+        <!-- <div class="MapInfo">
           <p class="OurStores">{{$t('Cms.OurStores')}}</p>
           <p class="BusinessHours">{{$t('Cms.BusinessHours')}}: 07:30 - 19:00</p>
           <p v-html="MapInfo" ></p>
-        </div>
+        </div> -->
           <div class="CmsMap">
             <p v-html="content.Body" class="cmsbody"></p>
-            <p class="addressIcon"><i></i>{{$t('home.Address')}}：</p>
+            <!-- <p class="addressIcon"><i></i>{{$t('home.Address')}}：</p>
             <div class="addressBox">
             <div class="perList" v-for="(val,index) in ShopList" :key="index" v-on:click="showContent(val.Id,index)" :class="{'activeColor':cindex==index}">
                 <div class="icon"><i></i></div>
@@ -28,7 +30,7 @@
                   <p>{{val.DescTwo}}</p>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
          <div class="clear"></div>
       </div>
@@ -43,7 +45,9 @@
     <div class="CmsNormal" v-if="NewcateId!='40112'">
       <transition name="slide">
         <div key="1" v-if="!waiting" style="display:flex;">
-            <div class="DetailTitle"><img :src="ImgList" v-show="ImgList!==null"><div class="TitleBg"><div class="innerBoxText">{{TitleName}}</div></div></div>
+            <div class="DetailTitle">
+              <!-- <img :src="ImgList" v-show="ImgList!==null"> -->
+              <div class="TitleBg"><div class="innerBoxText">{{TitleName}}</div></div></div>
       </div>
       </transition>
       <transition name="slide">
@@ -218,6 +222,11 @@ export default class InsCmsContent extends Vue {
 }
 </script>
 <style lang="less">
+.PcContact{
+  background: url('/images/pc/KAFUNG.gif') center center;
+  background-size: contain;
+  padding-bottom: 173px;
+}
 .PcContact .activeColor .content p:nth-child(1){
     color: #333!important;
     text-decoration: underline;
@@ -479,6 +488,11 @@ export default class InsCmsContent extends Vue {
     }
   }
 }
+.pc #footer{
+    margin-top: -203px;
+    z-index: 100;
+    position: relative;
+}
 </style>
 <style scoped lang="less">
 .TitleName{
@@ -498,19 +512,20 @@ export default class InsCmsContent extends Vue {
     width: 100%;
   }
   .TitleBg{
-    width: 500px;
-    border: 1px solid #ffffff;
-    height: 70px;
-    line-height: 70px;
+    // width: 500px;
+    // border: 1px solid #ffffff;
+    // height: 70px;
+    // line-height: 70px;
     margin: 0 auto;
-    padding: 10px;
+    // padding: 10px;
     margin-bottom: 20px;
-    top: 50%;
-    position: absolute;
-    transform: translateY(-50%);
+    margin-top: 50px;
+    // top: 50%;
+    // position: absolute;
+    // transform: translateY(-50%);
     .innerBoxText{
-      background:#ffffff;
-      color: #333333;
+      // background:#ffffff;
+      color: #000;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -524,32 +539,32 @@ export default class InsCmsContent extends Vue {
 .CmsNormal{
   width: 100%;
   display: inline-block;
-  background: #FFF;
+  // background: #FFF;
   padding-bottom: 5rem;
 }
-.TitleBg{
-  width: 500px;
-  height: 70px;
-  border:1px solid #ffffff;
-  margin: 0 auto;
-  padding: 10px;
-  margin-bottom: 20px;
-  .innerBoxText{
-    width: 100%;
-    height: 100%;
-    background:#ffffff;
-    color: #333333;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 40px;
-    font-weight: 700;
-    font-family: 'Arial';
-  }
-}
+// .TitleBg{
+//   width: 500px;
+//   height: 70px;
+//   border:1px solid #ffffff;
+//   margin: 0 auto;
+//   padding: 10px;
+//   margin-bottom: 20px;
+//   .innerBoxText{
+//     width: 100%;
+//     height: 100%;
+//     background:#ffffff;
+//     color: #333333;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     font-size: 40px;
+//     font-weight: 700;
+//     font-family: 'Arial';
+//   }
+// }
 .Cmsbg{
     width:100%;
-    background: url('/images/pc/pccontact_01.jpg') no-repeat center center;
+    // background: url('/images/pc/pccontact_01.jpg') no-repeat center center;
     background-size:100% 100%;
     display: block;
     box-sizing: border-box;
@@ -577,9 +592,9 @@ export default class InsCmsContent extends Vue {
   height: 20rem;
 }
 .CmsMap {
-    width: 50%;
+    width: 100%;
     float: left;
-    margin-left: 5%;
+    // margin-left: 5%;
     display: flex;
     flex-wrap: wrap;
     padding-top: 5rem;

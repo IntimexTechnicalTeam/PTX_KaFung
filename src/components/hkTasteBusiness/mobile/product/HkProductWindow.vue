@@ -3,11 +3,15 @@
         <img :src="(item.Image?item.Image:item.Img_L?item.Img_L:item.Img)"   :style="imgStyla" :data-key="item.Sku" @error="loadError"  @click="goUrl(item)"/>
         <div class="fav" v-if="!item.negotiable || item.negotiable==null"><img :src="item.IsFavorite ? '/images/mobile/faved.png': '/images/mobile/unfav.png'" @click.stop="addToFavorite(item)" /></div>
         <div class="in_pdWindow_item_description">
-             <router-link :to="'/product/detail/'+item.Sku" class="in_pdWindow_item_title" >&nbsp;{{item.Name}}</router-link >
+             <!-- <router-link :to="'/product/detail/'+item.Sku" class="in_pdWindow_item_title" >{{item.Name}}</router-link > -->
+             <div class="Number">
+              <!-- {{$t("product.Number")}}:  -->
+              {{item.Code}}
+              </div>
             <!-- <div class="in_pdWindow_item_code">&nbsp;{{item.Code}}</div> -->
-            <div class="in_pdWindow_item_price" v-if="!item.negotiable || item.negotiable==null">
+            <!-- <div class="in_pdWindow_item_price" v-if="!item.negotiable || item.negotiable==null">
               <inPrices :primePrices="item.ListPrice" :currentPrices="item.SalePrice" :currency="item.Currency" :DefaultListPrice="item.DefaultListPrice" :DefaultSalePrice="item.DefaultSalePrice" :DefaultCurrency="item.DefaultCurrency" size="small"></inPrices>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
@@ -129,7 +133,7 @@ export default class InsProductWindow extends Vue {
   border: 1px solid black !important;
 }
 .in_pdWindow_item_title {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     width: 90%;
     margin: 0 auto;
     text-align: center;
@@ -146,6 +150,11 @@ export default class InsProductWindow extends Vue {
 }
 .in_pdWindow_item_code {
   margin-top: 1rem;
+  color: #999999;
+  text-align: center;
+}
+.Number{
+  font-size: 1.2rem;
   color: #999999;
   text-align: center;
 }

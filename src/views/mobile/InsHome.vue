@@ -1,7 +1,9 @@
 <template>
   <div class="home" v-cloak>
     <HomeBanner :page="'Home'" />
+    <HkLiveBox/>
     <HkPromotion/>
+    <PkMap/>
   </div>
 </template>
 
@@ -10,7 +12,9 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 @Component({
   components: {
     HomeBanner: () => import('@/components/base/mobile/InsBanner.vue'),
-    HkPromotion: () => import('@/components/hkTasteBusiness/mobile/home/HkPromotion.vue')
+    HkPromotion: () => import('@/components/hkTasteBusiness/mobile/home/HkPromotion.vue'),
+    HkLiveBox: () => import('@/components/hkTasteBusiness/mobile/home/HkLiveBox.vue'),
+    PkMap: () => import('@/components/hkTasteBusiness/mobile/home/PkMap.vue')
   }
 })
 export default class InsHome extends Vue {

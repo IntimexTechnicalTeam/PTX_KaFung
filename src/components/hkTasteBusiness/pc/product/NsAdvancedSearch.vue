@@ -1,14 +1,15 @@
 <template>
     <div class="NsAdvancedSearch">
       <div class="TopMeun">
-          <p class="resetTitle">{{$t('product.Screening')}}<span class="el-icon-close" @click="closeSub"></span></p>
+          <!-- <p class="resetTitle">{{$t('product.Screening')}}<span class="el-icon-close" @click="closeSub"></span></p> -->
           <p class="resetAll" @click="resetAll">{{$t('Message.ResetOptions')}}</p>
         </div>
         <ul class="attrSearch" v-if="init" style="display:none;">
           <ReSearchItem v-for="(attr, index) in attrList" :key="index" :searchGroup="attr" :defaultSelected="deAttrGIds.indexOf(attr.Id) !== -1 ? selectedAttrs[deAttrGIds.indexOf(attr.Id)].Vals : []"  @changeSelect="changeAttrSelect" />
         </ul>
         <ul class="catSearch" v-if="init">
-          <ReSearchItem v-for="(cat, index) in catalogs" :key="index" :searchGroup="cat" :defaultSelected="deCatGIds.indexOf(cat.Id) !== -1 ? selectedCats[deCatGIds.indexOf(cat.Id)].Vals : []" :searchType="2"  @changeSelect="changeCatSelect" />
+          <!-- <ReSearchItem v-for="(cat, index) in catalogs" :key="index" :searchGroup="cat" :defaultSelected="deCatGIds.indexOf(cat.Id) !== -1 ? selectedCats[deCatGIds.indexOf(cat.Id)].Vals : []" :searchType="2"  @changeSelect="changeCatSelect" /> -->
+          <ReSearchItem v-for="(cat, index) in catalogs" :key="index" :searchGroup="cat" :defaultSelected="deCatGIds.indexOf(cat.Id) !== -1 ? [cat.Id] : []" :searchType="2"  @changeSelect="changeCatSelect" />
         </ul>
     </div>
 </template>
@@ -25,6 +26,7 @@ export interface attrItem {
 })
 export default class NsAdvancedSearch extends Vue {
     @Prop({ default: 0 }) private attrType!: number; // 产品属性数据类型（0 => 所有属性， 1 => 仅库存属性， 2 => 仅非库存属性）
+    @Prop({ default: [] }) private searchCatalogs! : any;
 
     attrList: any[] = []; // 产品属性数据
     catalogs: any[] = []; // 产品目录数据
@@ -191,19 +193,20 @@ export default class NsAdvancedSearch extends Vue {
     changeCatSelect (Id, cat) {
       this.deCatGIds = [];
       let flag = 0;
-      for (let i = 0; i < this.selectedCats.length; i++) {
-        if (this.selectedCats[i].Id === Id) {
-          flag = 1;
-          if (cat.length) {
-            this.selectedCats[i].Vals = cat;
-            break;
-          } else {
-            this.selectedCats.splice(i, 1);
-          }
-        }
-      }
+      // for (let i = 0; i < this.selectedCats.length; i++) {
+      //   if (this.selectedCats[i].Id === Id) {
+      //     flag = 1;
+      //     if (cat.length) {
+      //       this.selectedCats[i].Vals = cat;
+      //       break;
+      //     } else {
+      //       this.selectedCats.splice(i, 1);
+      //     }
+      //   }
+      // }
 
       if (!flag) {
+        this.selectedCats = [];
         this.selectedCats.push({
           Id: Id,
           Vals: cat
@@ -212,9 +215,9 @@ export default class NsAdvancedSearch extends Vue {
 
       this.paramCats = [];
       this.selectedCats.forEach(element => {
-        element.Vals.forEach(v => {
-          this.paramCats.push(v);
-        });
+        // element.Vals.forEach(v => {
+        //   this.paramCats.push(v);
+        // });
         if (element.Vals.length === 0) {
            this.paramCats.push(element.Id);
         } else {
@@ -240,7 +243,16 @@ export default class NsAdvancedSearch extends Vue {
       });
 
       this.paramCats = JSON.parse(this.$route.query.catalogs as string || '[]');
-
+      // this.paramCats = (this.$route.query.catalogs as string || '[]').split(',');
+    //   this.paramCats = [];
+    // let arr = (this.$route.query.catalogs as string).split(',');
+    // for (let index = 0; index < arr.length; index++) {
+    //   const el = parseInt(arr[index]);
+    //   // if (!isNaN(el)) {
+    //     this.paramCats.push(el);
+    //   // };
+    // }
+    // alert(this.paramCats.length);
       return Promise.resolve();
     }
 
@@ -248,9 +260,13 @@ export default class NsAdvancedSearch extends Vue {
       return JSON.parse(this.$route.query.type as string || '0');
     }
 
-    mounted () {}
+    mounted () {
+      // alert(1);
+    }
 
     created () {
+      // this.paramCats = this.searchCatalogs;
+      // alert(2);
       Promise.all([this.getDefaultSelected(), this.getAttrList(this.attrType), this.getCatalogs()]).then((result) => {
         this.setDefaultChecked();
       });
@@ -259,7 +275,8 @@ export default class NsAdvancedSearch extends Vue {
   @Watch('$route', { deep: true })
     onRouteChange (n, o) {
       if (!this.routerType) {
-        console.log('route变啦');
+        // console.log('route变啦');
+        // alert('route变啦');
         this.init = false;
 
         this.getDefaultSelected().then(() => {
@@ -271,16 +288,16 @@ export default class NsAdvancedSearch extends Vue {
 </script>
 <style scoped lang="less">
 .NsAdvancedSearch {
-  border-top-right-radius: 1rem;
-  border-bottom-right-radius: 1rem;
+  // border-top-right-radius: 1rem;
+  // border-bottom-right-radius: 1rem;
   overflow: auto;
-  height: 100vh;
+  // height: 100vh;
   .catSearch {
-    margin-top: 1rem;
+    // margin-top: 1rem;
     overflow: hidden;
     background: #fff;
-    border-top-right-radius: 1rem;
-    border-bottom-right-radius: 1rem;
+    // border-top-right-radius: 1rem;
+    // border-bottom-right-radius: 1rem;
     .NsSearchItem {
       width: 90%;
       margin: 0 auto;
@@ -290,12 +307,12 @@ export default class NsAdvancedSearch extends Vue {
     background: #fff;
     padding-bottom: 1rem;
     overflow: hidden;
-    border-top-right-radius: 1rem;
-    border-bottom-right-radius: 1rem;
+    // border-top-right-radius: 1rem;
+    // border-bottom-right-radius: 1rem;
   }
   .resetAll{
     color: #FFF;
-    font-size: 22px;
+    font-size: 18px;
     width: 90%;
     margin: 0 auto;
     background: #333;

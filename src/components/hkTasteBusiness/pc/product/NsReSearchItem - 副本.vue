@@ -1,18 +1,21 @@
 <template>
-    <li class="ReSearchItem">
-        <p class="category">
+    <li class="NsSearchItem">
+          <!-- <p class="category">
           {{searchGroup.Name}}
             <i class="el-icon-arrow-up"  @click="isOpen = !isOpen" v-if="!isOpen"></i>
             <i class="el-icon-arrow-down" @click="isOpen = !isOpen" v-else></i>
-        </p>
-        <transition name="fade">
-        <ul :class="{'open': isOpen}" >
-            <li>
-                <input type="checkbox" :id="searchGroup.Name+'-All'" v-model="isAll" @click="checkAll($event,searchGroup)" style="display:none;">
-                <label :for="searchGroup.Name+'-All'" >{{$t('Message.All')}}</label>
+        </p> -->
+          <transition name="fade">
+          <ul :class="{'open': isOpen}">
+            <li class="viewall">
+                <input name="fade_group" type="radio" :id="searchGroup.Name+'-All'" v-model="searchGroup.Id" :value="searchGroup.Id" @click="checkAll($event,searchGroup)" style="display:none;">
+                <label :for="searchGroup.Name+'-All'" >
+                  <!-- {{$t('Message.All')}} -->
+                  {{searchGroup.Name}}
+                </label>
             </li>
             <li v-for="(child, index2) in (searchType === 1 ? searchGroup.AttrValues : searchType === 2 ? searchGroup.Children : [])" :key="index2">
-                <input type="checkbox" :id="child.Name+index2" :value="child.Id" v-model="checkedValue" @click="selectAttr(searchGroup)" style="display:none;">
+                <input style="display:none;" type="checkbox" :id="child.Name+index2" :value="child.Id" v-model="checkedValue" @click="selectAttr(searchGroup)" >
                 <label :for="child.Name+index2">{{child.Name}}</label>
             </li>
             <!-- <i class="el-icon-plus" @click="isOpen = !isOpen" v-if="!isOpen"></i>
@@ -32,15 +35,17 @@ export default class InsAdvancedSearch extends Vue {
     @Prop({ default: () => {} }) private searchGroup!: any;
     @Prop({ default: () => [] }) private defaultSelected!: number[];
     @Prop({ default: 1 }) private searchType!: number; // 搜索数据类型（1 => 产品属性， 2 => 产品目录）
+    @Prop({ default: 0 }) private key!: number;
 
-    isOpen: boolean = true; // 是否展开
-    isAll: boolean = false; // 是否全选
+    isOpen: boolean = false; // 是否展开
+    isAll: boolean = true; // 是否全选
     checkedValue: number[] = []; // 选中的产品属性值
     selectedAttrs: attrItem[] = []; // 选中的产品属性值
-    showSubmeun () {
-      this.isOpen = !this.isOpen;
-    }
+    // isCheck:number = -1;
     //  全选（产品属性）
+    checkLi (val) {
+      $('.toggleLi' + val).toggleClass('borderLine');
+    }
     checkAll (e, attr) {
       console.log('checkAll');
       let a = e.target.checked;
@@ -50,16 +55,22 @@ export default class InsAdvancedSearch extends Vue {
           attr.AttrValues.forEach(element => {
             this.checkedValue.push(element.Id);
           });
+          // alert(1);
           this.$emit('changeSelect', attr.Id, this.checkedValue);
         } else if (this.searchType === 2) {
           console.log('产品目录全选');
-          attr.Children.forEach(element => {
-            this.checkedValue.push(element.Id);
-          });
+          // attr.Children.forEach(element => {
+          //   this.checkedValue.push(element.Id);
+          // });
+          // alert(2);
+          // alert(e.target.value);
+          this.checkedValue = [e.target.value];
           this.$emit('changeSelect', attr.Id, this.checkedValue);
         }
       } else {
+        // alert(3);
         this.checkedValue = [];
+        // this.checkedValue.push(e.target.checked);
         this.$emit('changeSelect', attr.Id, this.checkedValue);
       }
     }
@@ -94,9 +105,13 @@ export default class InsAdvancedSearch extends Vue {
             this.isAll = true;
           }
         } else if (this.searchType === 2) {
-          if (this.defaultSelected.length === this.searchGroup.Children.length) {
-            this.isAll = true;
-          }
+          // alert(this.defaultSelected[0] + 'vs' + this.searchGroup.Id);
+
+          // if (this.defaultSelected.length === this.searchGroup.Children.length) {
+          //   this.isAll = true;
+          // } else if (this.defaultSelected[0] === this.searchGroup.Id) {
+          //   this.isAll = true;
+          // }
         }
         this.checkedValue = this.defaultSelected;
       }
@@ -104,40 +119,59 @@ export default class InsAdvancedSearch extends Vue {
 }
 </script>
 <style scoped lang="less">
-.ReSearchItem {
-
+.NsSearchItem {
+      .colorstyle {
+        color: @base_color;
+      }
+      .borderLine {
+        border: 1px solid @base_color;
+       }
+      .viewall {
+        border-radius: .5rem;
+        background: #fff;
+        margin-top: 0;
+      }
       p.category {
         width: 100%;
-        font-size:20px;
+        font-size: 20px;
         color: #333333;
         background-color: #FFF;
-        background-size: 100% 100%;
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
-        justify-content: center;
+        justify-self: start;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
         align-items: center;
+        -ms-flex-negative: 0;
         flex-shrink: 0;
-        height: 50px;
-        line-height: 50px;
         position: relative;
-        cursor: pointer;
+        height: 40px;
+        // line-height: 40px;
+        border-radius: .3rem;
+        padding-top:10px;
+        padding-bottom: 10px;
         i{
-          font-size: 20px;
-          margin-left: 10px;
-          color: #fff;
+          position: absolute;
+          right: 0px;
+          top: 20px;
+          font-size: 1.6rem;
+          cursor: pointer;
         }
     }
 
      >ul {
        transition: all 3s;
-       box-shadow: 0px 2px 5px #ccc;
-       margin-top: 10px;
-       display: none;
         >li {
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            border-bottom: 1px solid #eee;
+            // height: 45px;
+            // display: flex;
+            // align-items: center;
+            // justify-content: flex-start;
+            // background: #f2f1f0;
+            // border-radius: .3rem;
+            margin-bottom: 10px;
+            // border:1px solid #f2f1f0;
+            cursor: pointer;
             input[type="checkbox"] {
                 width: 18px;
                 height: 18px;
@@ -155,20 +189,39 @@ export default class InsAdvancedSearch extends Vue {
                 background-size: auto;
 
                 &+label {
-                    color:#b59669;
-                    background: url('/images/mobile/ptx_27.png') no-repeat center center;
-                    background-size:cover;
+                    color: @base_color;
+                }
+            }
+            input[type="radio"] {
+                opacity: 0;
+            }
+
+            input[type="radio"]:checked {
+                // border: 1px solid @base_color;
+
+                &+label {
+                    color: @base_color;
+                    border: 1px solid @base_color;
+                    background: #fff;
                 }
             }
 
             label {
-            font-size: 18px;
-            color: #666666;
+            font-size: 16px;
+            color: #666;
             width: 100%;
-            text-align: center;
+            margin: 0 auto;
+            cursor: pointer;
+            height: 45px;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
+            background: #fff;
+            border-radius: 0.3rem;
+            // margin-bottom: 1rem;
+            border: 1px solid #f2f1f0;
+            padding: 0 10px;
+            box-sizing: border-box;
             }
         }
 
@@ -180,7 +233,7 @@ export default class InsAdvancedSearch extends Vue {
         }
 
         &.open {
-                display: block;
+                display: none;
                 transition: all 3s;
         }
     }

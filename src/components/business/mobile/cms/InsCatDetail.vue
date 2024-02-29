@@ -143,6 +143,10 @@ export default class insNews extends Vue {
 </script>
 <style scoped lang="less">
 .catDetail {
+  width: 100%;
+  display: block;
+  background: url('/images/pc/KAFUNG.gif') center center;
+  background-size: 50% 50%;
   .catContent {
     width: 100%;
     margin: 0 auto;

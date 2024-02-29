@@ -40,7 +40,9 @@
     <div class="CmsNormal" v-if="NewcateId!='40112'">
       <transition name="slide">
         <div key="1" v-if="!waiting" style="display:flex;">
-              <div class="DetailTitle"><img :src="ImgList" v-show="ImgList!==null"><div class="TitleBg"><div class="innerBoxText">{{TitleName}}</div></div></div>
+              <div class="DetailTitle">
+                <!-- <img :src="ImgList" v-show="ImgList!==null"> -->
+                <div class="TitleBg"><div class="innerBoxText">{{TitleName}}</div></div></div>
       </div>
       </transition>
       <transition name="slide">
@@ -239,6 +241,7 @@ export default class InsCmsContent extends Vue {
   }
 }
 .MobileContact{
+
     .OurStores{
       font-size: 2.5rem;
       font-weight: 700;
@@ -461,19 +464,20 @@ export default class InsCmsContent extends Vue {
       width: 100%;
     }
     .TitleBg{
-      width: 75%;
-      border: 1px solid #ffffff;
-      height: 4.5rem;
-      line-height: 4.5rem;
+      // width: 75%;
+      // border: 1px solid #ffffff;
+      // height: 4.5rem;
+      // line-height: 4.5rem;
       margin: 0 auto;
       padding: 10px;
+      margin-top: 3rem;
       margin-bottom: 20px;
-      top: 50%;
-      position: absolute;
-      transform: translateY(-50%);
+      // top: 50%;
+      // position: absolute;
+      // transform: translateY(-50%);
       .innerBoxText{
-        background:#ffffff;
-        color: #333333;
+        // background:#ffffff;
+        color: #000;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -485,28 +489,31 @@ export default class InsCmsContent extends Vue {
   }
 .CmsNormal{
   width: 100%;
-  display: inline-block;
-  background: #FFF;
+  display: block;
+  // background: #FFF;
+  background: url('/images/pc/KAFUNG.gif') center center;
+  background-size: 50% 50%;
+  // padding-bottom: 173px;
 }
-.TitleBg{
-  width: 75%;
-  height: 4.5rem;
-  border:1px solid #ffffff;
-  margin: 0 auto;
-  padding: .8rem;
-  .innerBoxText{
-    width: 100%;
-    height: 100%;
-    background:#ffffff;
-    color: #333333;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2.5rem;
-    font-weight: 700;
-    font-family: 'Arial';
-  }
-}
+// .TitleBg{
+//   width: 75%;
+//   height: 4.5rem;
+//   border:1px solid #ffffff;
+//   margin: 0 auto;
+//   padding: .8rem;
+//   .innerBoxText{
+//     width: 100%;
+//     height: 100%;
+//     background:#ffffff;
+//     color: #333333;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     font-size: 2.5rem;
+//     font-weight: 700;
+//     font-family: 'Arial';
+//   }
+// }
 .cmsTitlebg{
     width: 50%;
     background: url(/images/mobile/contact_02.png) no-repeat center center;

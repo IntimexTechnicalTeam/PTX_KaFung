@@ -180,6 +180,7 @@ export default class InsMenuLayout extends Vue {
             line-height: unset;
             text-align: center;
             margin-bottom: 1rem;
+            white-space: unset;
              >a {
                  color:#666666;
                  background: #fff;
@@ -191,6 +192,7 @@ export default class InsMenuLayout extends Vue {
                  margin: 0 auto;
                  border:1px solid #666666;
                  font-weight: 500;
+                 box-sizing: border-box;
                  b{
                      color:#FFF;
                      display: block;
@@ -199,7 +201,7 @@ export default class InsMenuLayout extends Vue {
                      &:nth-child(1){
                         color:#666666;
                         font-weight: 500;
-                        font-size: 1.6rem;
+                        font-size: 1.4rem;
                      }
                      &:nth-child(2){
                          color:#262626;
@@ -210,6 +212,9 @@ export default class InsMenuLayout extends Vue {
 
             a {
                 text-decoration: none;
+            }
+            >ul{
+              width: 96%;
             }
         }
 

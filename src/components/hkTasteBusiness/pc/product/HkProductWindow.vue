@@ -7,10 +7,13 @@
         <div class="fav" v-if="!item.Negotiable"><img :src="item.IsFavorite ? '/images/mobile/faved.png': '/images/mobile/unfav.png'" @click.stop="addToFavorite(item)" /></div>
       </div>
         <div class="in_pdWindow_item_description">
-            <a  href="javascript:;" class="in_pdWindow_item_title" v-on:click="addCart(item)">{{item.Name}}</a>
-            <div class="in_pdWindow_item_price" v-if="!item.Negotiable">
+            <!-- <a  href="javascript:;" class="in_pdWindow_item_title" v-on:click="addCart(item)">{{item.Name}}</a> -->
+            <div class="Number">
+              <!-- {{$t("product.Number")}}:  -->
+              {{item.Code}}</div>
+            <!-- <div class="in_pdWindow_item_price" v-if="!item.Negotiable">
               <inPrices :primePrices="item.ListPrice" :currentPrices="item.SalePrice" :currency="item.Currency" :DefaultListPrice="item.DefaultListPrice" :DefaultSalePrice="item.DefaultSalePrice" :DefaultCurrency="item.DefaultCurrency" size="small"></inPrices>
-            </div>
+            </div> -->
         </div>
     </div>
   </div>
@@ -229,7 +232,7 @@ export default class InsProductWindow extends Vue {
   border: 1px solid @base_color !important;
 }
 .in_pdWindow_item_title {
-    font-size: 1.4rem;
+    font-size: 18px;
     width: 90%;
     margin: 0 auto;
     word-break: break-all;
@@ -246,6 +249,12 @@ export default class InsProductWindow extends Vue {
     margin-top: 10px;
     margin-bottom: 10px;
 
+}
+.Number{
+  font-size: 18px;
+  color: #000;
+  text-align: center;
+  margin-top: 10px;
 }
 .in_pdWindow_item_code {
   margin-top: 1rem;
